@@ -1,0 +1,4 @@
+bs4
+groq
+exa_py
+cohere
