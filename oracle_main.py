@@ -9,11 +9,11 @@ from operator import itemgetter
 import cohere
 import time
 
-co = cohere.Client(os.getenv('COHERE_API_KEY'))
+co = cohere.Client(os.getenv("COHERE_API_KEY"))
 exa = Exa(os.getenv('EXA_API_KEY'))
 
 groq_api_keys = [
-    os.getenv("GROQ_API_KEY"),
+    os.getenv("GROQ_API_KEY_1"),
     os.getenv("GROQ_API_KEY_2"),
     os.getenv("GROQ_API_KEY_3")
 ]
@@ -54,8 +54,7 @@ def scrape_website(url):
     except requests.RequestException as e:
         print(f"Error scraping website {url}: {str(e)}")
         return ""
-
-
+    
 def get_relevant_websites(prompt, num_results=5):
     try:
         response = exa.search_and_contents(
@@ -103,7 +102,7 @@ def generate_summary(content, max_length=300):
     except Exception as e:
         print(f"Error generating summary: {str(e)}")
         return "IRRELEVANT"
-    
+
 
 def generate_llm_response(prompt, context, max_retries=3):
     global client
@@ -143,6 +142,7 @@ def generate_llm_response(prompt, context, max_retries=3):
             elif attempt == max_retries - 1:
                 return "Sorry, I couldn't generate a response due to an error."
     
+
 def main():
     st.title("Oracle")
 
@@ -166,19 +166,25 @@ def main():
 
             top_3_websites = sorted(relevant_websites, key=itemgetter('relevance_score'), reverse=True)[:3]
 
-            st.subheader("Top 3 Relevant Websites:")
-            for website in top_3_websites:
-                st.write(f"[{website['title']}]({website['url']})")
-                st.write("Summary:")
-                st.write(website['summary'])
-                st.write("---")
-
-            combined_content = "\n\n".join([website['summary'] for website in top_3_websites])
-            with st.spinner("Generating AI response..."):
-                llm_response = generate_llm_response(user_prompt, combined_content)
-
-            st.subheader("AI Response:")
-            st.write(llm_response)
+            # Create two columns
+            col1, col2 = st.columns(2)
             
+            with col1:
+                st.subheader("Top 3 Relevant Websites:")
+                for website in top_3_websites:
+                    with st.expander(f"{website['title']}"):
+                        st.write(f"[{website['title']}]({website['url']})")
+                        st.write("Summary:")
+                        st.write(website['summary'])
+                        st.write("---")
+
+            with col2:
+                combined_content = "\n\n".join([website['summary'] for website in top_3_websites])
+                with st.spinner("Generating AI response..."):
+                    llm_response = generate_llm_response(user_prompt, combined_content)
+
+                st.subheader("AI Response:")
+                st.write(llm_response)
+                
 if __name__ == "__main__":
     main()
