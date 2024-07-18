@@ -19,7 +19,7 @@ Before you begin, ensure you have met the following requirements:
 ## Installation
 
 1. Clone the repository:
-   git clone https://github.com/yourusername/oracle.git
+   git clone https://github.com/yourusername/oracle.git<br>
    cd oracle
 2. Create a virtual environment:
    python -m venv oracle_env
@@ -30,9 +30,9 @@ Before you begin, ensure you have met the following requirements:
 
 You need to set up API keys for the services used by Oracle. Create a `.env` file in the project root and add your API keys:
 
-EXA_API_KEY=your_exa_api_key
-GROQ_API_KEY=your_groq_api_key
-COHERE_API_KEY=your_cohere_api_key
+EXA_API_KEY=your_exa_api_key <br>
+GROQ_API_KEY=your_groq_api_key <br>
+COHERE_API_KEY=your_cohere_api_key <br>
 
 ## Usage
 
