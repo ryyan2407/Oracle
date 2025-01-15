@@ -34,7 +34,7 @@ EXA_API_KEY=your_exa_api_key <br>
 GROQ_API_KEY=your_groq_api_key <br>
 COHERE_API_KEY=your_cohere_api_key <br>
 
-To get your free API keys use the following websites:
+To get your free API keys use the following websites: <br>
 EXA - https://dashboard.exa.ai/api-keys <br>
 Cohere - https://dashboard.cohere.com/api-keys <br>
 Groq - https://console.groq.com/keys <br>
